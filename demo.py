@@ -48,6 +48,8 @@ class Demo:
             if not ok:
                 break
 
+            print(f"Captured frame size: {frame.shape[1]}x{frame.shape[0]}")
+
             undistorted = cv2.undistort(
                 frame, self.gaze_estimator.camera.camera_matrix,
                 self.gaze_estimator.camera.dist_coefficients)
@@ -75,11 +77,14 @@ class Demo:
 
     def _create_capture(self) -> cv2.VideoCapture:
         if self.config.demo.use_camera:
-            cap = cv2.VideoCapture(0)
+            cap = cv2.VideoCapture(2, cv2.CAP_V4L2)
         elif self.config.demo.video_path:
             cap = cv2.VideoCapture(self.config.demo.video_path)
         else:
             raise ValueError
+        if not cap.isOpened():
+            cap.open(2)
+        print(f"Opening camera: {self.gaze_estimator.camera.width} x {self.gaze_estimator.camera.height}")
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.gaze_estimator.camera.width)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.gaze_estimator.camera.height)
         return cap
@@ -107,6 +112,7 @@ class Demo:
         else:
             raise ValueError
         output_path = self.output_dir / f'{self._create_timestamp()}.{ext}'
+        print(f"Using camera: {self.gaze_estimator.camera.width} x {self.gaze_estimator.camera.height}, {fourcc}")
         writer = cv2.VideoWriter(output_path.as_posix(), fourcc, 30,
                                  (self.gaze_estimator.camera.width,
                                   self.gaze_estimator.camera.height))

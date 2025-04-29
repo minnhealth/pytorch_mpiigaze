@@ -1,4 +1,9 @@
+experiments/
+datasets/
 videos/
+*.mkv
+*.mp4
+*.avi
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -85,6 +90,7 @@ celerybeat-schedule
 .env
 
 # virtualenv
+.venvLinux
 .venv
 venv/
 ENV/
