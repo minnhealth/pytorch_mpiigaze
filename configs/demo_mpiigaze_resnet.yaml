@@ -4,7 +4,7 @@ model:
   name: resnet_preact
 gaze_estimator:
   checkpoint: data/models/mpiigaze/resnet_preact/model.pth
-  camera_params: data/calib/logitech720p_params.yaml
+  camera_params: data/calib/sample_params.yaml
   normalized_camera_params: data/calib/normalized_camera_params_eye.yaml
   normalized_camera_distance: 0.6
 demo:
